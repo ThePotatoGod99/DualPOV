@@ -17,22 +17,9 @@ import view.GameView;
 import view.SideView;
 import view.TopView;
 
-public class Game extends JPanel implements Runnable {
+public class Game extends JPanel {
 
-	public void run() {
-		while (animating) {
-			if (!paused) {
-				angle += 0.01;
-				repaint();
-
-			}
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				System.out.println("Processus interrompu!");
-			}
-		}
-	}
+	
 
 	public double angle = Math.PI / 12;
 	/**
@@ -45,8 +32,7 @@ public class Game extends JPanel implements Runnable {
 
 	private GameObject object;
 
-	private int x = 200, y = 200;
-	private boolean animating = false, paused = false;
+	private int x = 200, y = 20;
 
 	public Game() {
 		this.setBackground(Color.black);
@@ -54,26 +40,20 @@ public class Game extends JPanel implements Runnable {
 		data.add(new GameObject(350, 200, 2));
 		data.add(object);
 
-		Thread thread = new Thread(this);
 		this.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				super.mouseReleased(e);
+				super.mousePressed(e);
+
+				System.out.println(e.getY());
+				double y = (getHeight() - e.getY()) - getHeight() / 2;
+				angle = Math.atan((y) / (e.getX() - getWidth() / 2));
 				if (xd == -1) {
 					// angle += Math.PI / 6;
 				}
 				xd *= -1;
-				if (!animating) {
-					animating = true;
-					thread.start();
-					paused = false;
-				} else if (!paused) {
-					paused = true;
-				} else {
-					paused = false;
-				}
 				repaint();
 			}
 
@@ -115,9 +95,9 @@ public class Game extends JPanel implements Runnable {
 		 */
 		GameView gameview = new TopView();
 
-		// gameview.draw(g2d, data);
-		 GameView side = new SideView(new Vecteur(getWidth()/2, getHeight()/2), angle);
-		 side.draw(g2d, data);
+		gameview.draw(g2d, data);
+		GameView side = new SideView(new Vecteur(getWidth() / 2, getHeight() / 2), angle);
+		side.draw(g2d, data);
 
 	}
 

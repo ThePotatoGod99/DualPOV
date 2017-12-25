@@ -19,8 +19,9 @@ public class SideView implements GameView {
 	@Override
 	public void draw(Graphics2D g2d, ArrayList<GameObject> data) {
 		// TODO Auto-generated method stub
-		g2d.setColor(Color.blue);
+		g2d.setColor(Color.yellow);
 
+		g2d.draw(Vecteur.vecteurAvecAngle(1000, angle).ligne(origin));
 		for (GameObject object : data) {
 			drawObject(g2d, object);
 		}
@@ -33,23 +34,23 @@ public class SideView implements GameView {
 
 		Vecteur BC = Vecteur.vecteurAvecAngle(1000, angle);
 
-		g2d.draw(BC.ligne(origin));
+//		g2d.draw(BC.ligne(origin));
 
 		Vecteur OA = object.getPosition();
-		g2d.setColor(Color.red);
-		g2d.draw(OA.ligne());
+//		g2d.setColor(Color.red);
+//		g2d.draw(OA.ligne());
 
 		Vecteur OAOB = OA.soustrait(origin);
-		g2d.setColor(Color.cyan);
-		g2d.draw(OAOB.ligne(origin));
+//		g2d.setColor(Color.cyan);
+//		g2d.draw(OAOB.ligne(origin));
 
 		Vecteur proj1 = Vecteur.projectionOrthogonale(OAOB, BC);
 		g2d.setColor(Color.BLUE);
-		g2d.draw(proj1.ligne(origin));
+//		g2d.draw(proj1.ligne(origin));
 
 		Vecteur proj1_2 = proj1.rotate(-angle);
-		g2d.setColor(Color.GREEN);
-		g2d.draw(proj1_2.ligne(new Vecteur(origin.getX(), 0)));
+//		g2d.setColor(Color.GREEN);
+//		g2d.draw(proj1_2.ligne(new Vecteur(origin.getX(), 0)));
 
 		g2d.drawRect((int) (proj1_2.getX() + origin.getX()), object.getZ(), object.getSizeX(), object.getSizeZ());
 	}
